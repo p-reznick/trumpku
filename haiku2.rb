@@ -33,21 +33,33 @@ class Scanner
   end
 
   def get_syllable_count(word)
-    count = word.scan(/[aeiou]+/i).length
+    # Syllable rules developed in collaboration with Ruta Gajauskaite
+    return get_num_syllable_count(word) if word =~ /[0-9]/
 
-    word = decimal_to_word(word) if word.to_i.to_s == word
+    count = word.scan(/[aeiou]+/i).length
 
     if word =~ /[^aeiou]e\z/ && count > 1
       count -= 1
     elsif word =~ /[^aeiou]y\z/
       count += 1
+    elsif word =~ /%/
+      count += 2
     end
 
     count
   end
 
+  def get_num_syllable_count(word)
+    word = decimal_to_word(word)
+    word.split.each.inject(0) do |sum, w|
+      sum += get_syllable_count(w)
+    end
+  end
+
   def decimal_to_word(word)
     # handles decimal numbers 0 to 999999
+    word = word.scan(/[0-9]+/)[0]
+
     decimal = word.to_s.chars.reverse
     word_arr = []
 
@@ -135,3 +147,5 @@ class Scanner
 end
 
 scan = Scanner.new('./public/text_files/trump_speeches/trump-speeches-master/speeches.txt')
+# p scan.get_sentences
+p scan.get_phrase_syllables('Probably 55 years old')
