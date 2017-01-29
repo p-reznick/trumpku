@@ -9,7 +9,8 @@ not_found do
 end
 
 get '/' do
-  scan = Scanner.new('./public/text_files/trump.txt')
+  trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
+  scan = Scanner.new(trump_path)
   @haiku = scan.get_sample_haiku
   erb :home
 end

@@ -1,8 +1,20 @@
-# require_relative "./haiku.rb"
+# copyrith
 require 'pry'
 
 class Scanner
   attr_accessor :text, :all_words, :sentences
+
+  ONES = %w(zero one two three four five six seven eight nine)
+  TENS = %w(zero ten twenty thirty forty fifty sixty seventy eighty ninety)
+  TEENS = {'ten one' => 'eleven',
+           'ten two' => 'twelve',
+           'ten three' => 'thirteen',
+           'ten four' => 'fourteen',
+           'ten five' => 'fifteen',
+           'ten six' => 'sixteen',
+           'ten seven' => 'seventeen',
+           'ten eight' => 'eighteen',
+           'ten nine' => 'nineteen'}
 
   def initialize(text)
     @text = get_text(text)
@@ -12,7 +24,6 @@ class Scanner
 
   def get_text(text)
     if text =~ /\.(txt|md)\z/
-      return_string = ''
       File.open(text, 'r').each.inject('') do |string, line|
         string.concat(line)
       end
@@ -21,8 +32,10 @@ class Scanner
     end
   end
 
-  def get_word_syllables(word)
+  def get_syllable_count(word)
     count = word.scan(/[aeiou]+/i).length
+
+    word = decimal_to_word(word) if word.to_i.to_s == word
 
     if word =~ /[^aeiou]e\z/ && count > 1
       count -= 1
@@ -33,9 +46,41 @@ class Scanner
     count
   end
 
+  def decimal_to_word(word)
+    # handles decimal numbers 0 to 999999
+    decimal = word.to_s.chars.reverse
+    word_arr = []
+
+    decimal.each_with_index do |digit, index|
+      if index % 3 == 0
+        word_arr.push(ONES[digit.to_i])
+      elsif index % 3 == 1
+        word_arr.push(TENS[digit.to_i])
+      elsif index % 3 == 2
+        word_arr.push(ONES[digit.to_i] + ' hundred')
+      end
+    end
+    word_arr.reverse!
+
+    if decimal.count > 3
+      word_arr[1] == 'ten' ? insert_idx = 3 : insert_idx = 2
+      word_arr = word_arr.insert(insert_idx, 'thousand')
+    end
+
+    word_arr.delete_if { |word| word =~ /zero/ } unless word_arr.length == 1
+
+    word_str = word_arr.join(' ')
+
+    TEENS.each do |k, v|
+      word_str.gsub!(/#{k}/, v)
+    end
+
+    word_str
+  end
+
   def get_phrase_syllables(string)
     string.split.inject(0) do |sum, word|
-      sum += get_word_syllables(word)
+      sum += get_syllable_count(word)
     end
   end
 
@@ -65,7 +110,6 @@ class Scanner
     second = get_syll_sentences(7).sample
     third = get_syll_sentences(5).sample
 
-    # puts get_syll_sentences(10).sample + ' ' + get_syll_sentences(7).sample
     puts format_haiku(first, second, third)
   end
 
@@ -90,6 +134,4 @@ class Scanner
   end
 end
 
-trump_file_path = "./public/text_files/trump.txt"
-moby_file_path = "/text_files/moby-dick.txt"
-hemingway_file_path = "/text_files/hemingway.txt"
+scan = Scanner.new('./public/text_files/trump_speeches/trump-speeches-master/speeches.txt')
