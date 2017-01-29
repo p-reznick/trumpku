@@ -35,6 +35,7 @@ class Scanner
   def get_syllable_count(word)
     # Syllable rules developed in collaboration with Ruta Gajauskaite
     return get_num_syllable_count(word) if word =~ /[0-9]/
+    return word.length if is_acronym?(word)
 
     count = word.scan(/[aeiou]+/i).length
 
@@ -44,6 +45,8 @@ class Scanner
       count += 1
     elsif word =~ /%/
       count += 2
+    elsif word =~ /[&+@]/
+      count += 1
     end
 
     count
@@ -141,11 +144,16 @@ class Scanner
   def format_haiku(line_1, line_2, line_3)
     [line_1, line_2, line_3].map do |l|
       l[0] = l[0].upcase
+      l = l.gsub(/"/, '')
+      l = l.strip
       l
     end.join("\n") + '.'
+  end
+
+  def is_acronym?(word)
+    (word =~ /\A[a-z\.]{#{word.length}}\z/i) ? true : false
   end
 end
 
 scan = Scanner.new('./public/text_files/trump_speeches/trump-speeches-master/speeches.txt')
-# p scan.get_sentences
-p scan.get_phrase_syllables('Probably 55 years old')
+binding.pry
