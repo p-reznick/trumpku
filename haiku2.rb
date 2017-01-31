@@ -32,6 +32,18 @@ class Scanner
     end
   end
 
+  def gen_word_indices
+    hash = {}
+    all_words.each_with_index do |word, index|
+      if hash[word]
+        hash[word] << index
+      else
+        hash[word] = [index]
+      end
+    end
+    hash
+  end
+
   def get_syllable_count(word)
     # Syllable rules developed in collaboration with Ruta Gajauskaite
     return get_num_syllable_count(word) if word =~ /[0-9]/
@@ -43,9 +55,9 @@ class Scanner
       count -= 1
     elsif word =~ /[^aeiou]y\z/
       count += 1
-    elsif word =~ /%/
+    elsif word =~ /[%$]/
       count += 2
-    elsif word =~ /[&+@]/
+    elsif word =~ /[&\+@]/
       count += 1
     end
 
@@ -100,9 +112,9 @@ class Scanner
   end
 
   def get_sentences
-    text.split(/[(\.)(\,)]/).map do |s|
-      s.gsub(/\n/, '').strip
-    end
+    sentences = text.split(/[(\.)(\,)]/).map do |sentence|
+      sentence.gsub(/\n/, '').strip
+    end.delete_if { |sentence| sentence =~ /barron/i }
   end
 
   def get_words
@@ -113,34 +125,37 @@ class Scanner
     processed_words
   end
 
-  def get_syll_sentences(num_syls)
-    # matches = sentences.select do |s|
-    #   get_phrase_syllables(s) == num_syls
-    # end
-    loop do
+  def get_syll_sentence(num_syls)
+    counter = 0
+
+    while counter < 1000 do
       sentence = sentences.sample
-      return [sentence] if get_phrase_syllables(sentence) == num_syls
+      return sentence if get_phrase_syllables(sentence) == num_syls
+      counter += 1
     end
   end
 
+  def get_syll_fragment(link_word, num_syls)
+    # WIP
+  end
+
   def print_sample_haiku
-    first = get_syll_sentences(5).sample
-    second = get_syll_sentences(7).sample
-    third = get_syll_sentences(5).sample
+    first = get_syll_sentence(5)
+    second = get_syll_sentence(7)
+    third = get_syll_sentence(5)
 
     puts format_haiku(first, second, third)
   end
 
   def get_sample_haiku
-    first = get_syll_sentences(5).sample
-    second = get_syll_sentences(7).sample
-    third = get_syll_sentences(5).sample
+    first = get_syll_sentence(5)
+    second = get_syll_sentence(7)
+    third = get_syll_sentence(5)
 
     [first, second, third].map do |l|
       l[0] = l[0].upcase
       l
     end
-
     [first, second, third + '.']
   end
 
@@ -164,5 +179,6 @@ class Scanner
   end
 end
 
-# scan = Scanner.new('./public/text_files/trump_speeches/trump-speeches-master/speeches.txt')
+# trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
+# scan = Scanner.new(trump_path)
 # binding.pry
