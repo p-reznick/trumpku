@@ -114,10 +114,13 @@ class Scanner
   end
 
   def get_syll_sentences(num_syls)
-    matches = sentences.select do |s|
-      get_phrase_syllables(s) == num_syls
+    # matches = sentences.select do |s|
+    #   get_phrase_syllables(s) == num_syls
+    # end
+    loop do
+      sentence = sentences.sample
+      return [sentence] if get_phrase_syllables(sentence) == num_syls
     end
-    matches.empty? ? ['no dice'] : matches
   end
 
   def print_sample_haiku
@@ -152,8 +155,14 @@ class Scanner
 
   def is_acronym?(word)
     (word =~ /\A[a-z\.]{#{word.length}}\z/i) ? true : false
+    false
+  end
+
+  def to_s
+    puts "total words: #{all_words.count}"
+    puts "total sentences: #{sentences.count}"
   end
 end
 
-scan = Scanner.new('./public/text_files/trump_speeches/trump-speeches-master/speeches.txt')
-binding.pry
+# scan = Scanner.new('./public/text_files/trump_speeches/trump-speeches-master/speeches.txt')
+# binding.pry
