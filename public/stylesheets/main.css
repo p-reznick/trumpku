@@ -1,0 +1,76 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: #BF0A30;
+  min-height: 760px;
+}
+
+footer {
+  position: absolute;
+  color: #002868;
+  font-weight: 900;
+  font-size: 44px;
+  bottom: 0;
+  left: 0;
+  line-height: 1.2;
+}
+
+footer p:nth-of-type(2) {
+  color: #8c8c8c;
+}
+
+footer div.social_item {
+  float: right;
+  margin: 1rem;
+  width: 96px;
+  height: 96px;
+}
+
+footer div.counter_container {
+  margin-left: 1rem;
+}
+
+footer div.instagram {
+  background: url("/images/insta_white.png");
+}
+
+footer div.facebook {
+  background: url("/images/fb_white.png");
+}
+
+footer div.twitter {
+  background: url("/images/twitter_white.png");
+}
+
+header h1 {
+  color: #fff;
+  font-weight: 900;
+  font-size: 120px;
+  line-height: 1;
+  padding-left: 1rem;
+}
+
+header h1 span {
+  color: #002868;
+}
+
+main div#haiku_container,
+main a {
+  color: #fff;
+  font-style: italic;
+  font-size: 36px;
+  margin-top: 3rem;
+  margin-left: 3rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+main div#refresh_button a {
+  display: inline-block;
+  margin-top: 50px;
+  margin-left: 1rem;
+  font-style: normal;
+}
+
+main div#refresh_button a:hover {
+  color: #8c8c8c;
+}

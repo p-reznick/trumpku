@@ -1,17 +1,48 @@
 <!DOCTYPE html>
+
+<!--Idea, design and code by PReznick-->
+
 <html lang="en-US">
   <head>
     <title>Trumpku</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/reset.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   </head>
   <body>
-    <p><%= @haiku[0] %></p>
-    <p><%= @haiku[1] %></p>
-    <p><%= @haiku[2] %></p>
+    <header>
+      <h1>Trump<span>ku</span></h1>
+    </header>
+    <main>
+      <div id="haiku_container">
+        <p><%= @haiku[0] %></p>
+        <p><%= @haiku[1] %></p>
+        <p><%= @haiku[2] %></p>
+      </div>
+      <div id="refresh_button">
+        <a href="https://random-word-haiku-preznick.c9users.io">Another One</a>
+      </div>
+    </main>
     <footer>
-      <p>copyright &copy; Peter Reznick 2017</p>
+      <div class="counter_container">
+        <p>12,000</p>
+        <p>Trumpkus</p>
+      </div>
+      <div class="social_container">
+        <a href="#">
+          <div class="social_item instagram">
+          </div>
+        </a>
+        <a href="#">
+          <div class="social_item twitter">
+          </div>
+        </a>
+        <a href="#">
+          <div class="social_item facebook">
+          </div>
+        </a>
+      </div>
     </footer>
   </body>
 </html>
