@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./stylesheets/reset.css">
     <link rel="stylesheet" type="text/css" href="./stylesheets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/trumpku_icon.png" type="image/x-icon" />
   </head>
   <body>
     <header>
@@ -21,18 +22,17 @@
         <p><%= @haiku[2] %></p>
       </div>
       <div id="refresh_button">
-        <!--FIX THIS TO CORRECT DOMAIN NAME-->
-        <a href="https://frozen-fortress-97022.herokuapp.com/">Another One</a>
+        <a href="/new_haiku">Another One</a>
       </div>
     </main>
     <footer>
       <div class="counter_container">
-        <p>12,000</p>
-        <p>Trumpkus</p>
+        <p><%= @haiku_count %></p>
+        <p>Trumpkus <span>since <%= @startup_date %></span></p>
       </div>
       <div class="social_container">
         <a href="#">
-          <div class="social_item instagram">
+          <div class="social_item facebook">
           </div>
         </a>
         <a href="#">
@@ -40,7 +40,7 @@
           </div>
         </a>
         <a href="#">
-          <div class="social_item facebook">
+          <div class="social_item instagram">
           </div>
         </a>
       </div>

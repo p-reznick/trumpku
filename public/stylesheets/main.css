@@ -14,12 +14,8 @@ footer {
   line-height: 1.2;
 }
 
-footer p:nth-of-type(2) {
-  color: #8c8c8c;
-}
-
 footer div.social_item {
-  float: right;
+  float: left;
   margin: 1rem;
   width: 96px;
   height: 96px;
@@ -27,6 +23,14 @@ footer div.social_item {
 
 footer div.counter_container {
   margin-left: 1rem;
+}
+
+footer div.counter_container p:nth-of-type(1) {
+  font-size: 64px;
+}
+
+footer div.counter_container p:nth-of-type(2) {
+  color: #8c8c8c;
 }
 
 footer div.instagram {
@@ -49,7 +53,8 @@ header h1 {
   padding-left: 1rem;
 }
 
-header h1 span {
+header h1 span,
+footer span {
   color: #002868;
 }
 
