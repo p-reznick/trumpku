@@ -182,7 +182,7 @@ class Scanner
     haiku.split("\n").map do |line|
       line[0] = line[0].upcase
       line
-    end.join("\n")
+    end
   end
 
   def is_acronym?(word)
