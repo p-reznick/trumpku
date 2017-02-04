@@ -1,8 +1,7 @@
-# copyrith
 require 'pry'
 
 class Scanner
-  attr_accessor :text, :all_words, :sentences
+  attr_accessor :text, :all_words, :phrases
 
   ONES = %w(zero one two three four five six seven eight nine)
   TENS = %w(zero ten twenty thirty forty fifty sixty seventy eighty ninety)
@@ -19,7 +18,7 @@ class Scanner
   def initialize(text)
     @text = get_text(text)
     @all_words = get_words
-    @sentences = get_sentences
+    @phrases = get_phrases
   end
 
   def get_text(text)
@@ -46,12 +45,14 @@ class Scanner
 
   def get_syllable_count(word)
     # Syllable rules developed in collaboration with Ruta Gajauskaite
-    return get_num_syllable_count(word) if word =~ /[0-9]/
+    if word =~ /[0-9]/
+      
+    end
     return word.length if is_acronym?(word)
 
     count = word.scan(/[aeiou]+/i).length
 
-    if word =~ /[^aeiou]e\z/ && count > 1
+    if word =~ /[^aeiouy]e\z/ && count > 1
       count -= 1
     elsif word =~ /[^aeiou]y\z/
       count += 1
@@ -111,10 +112,11 @@ class Scanner
     end
   end
 
-  def get_sentences
-    sentences = text.split(/[(\.)(\,)]/).map do |sentence|
-      sentence.gsub(/\n/, '').strip
-    end.delete_if { |sentence| sentence =~ /barron/i }
+  def get_phrases
+    split_pattern = /[\.\,;:!?]/
+    phrases = text.split(split_pattern).map do |phrase|
+      phrase.gsub(/\n/, '').strip
+    end.delete_if { |phrase| phrase =~ /barron/i }
   end
 
   def get_words
@@ -125,47 +127,62 @@ class Scanner
     processed_words
   end
 
-  def get_syll_sentence(num_syls)
+  def get_syll_phrase(num_sylls)
     counter = 0
 
     while counter < 1000 do
-      sentence = sentences.sample
-      return sentence if get_phrase_syllables(sentence) == num_syls
+      phrase = phrases.sample
+      return phrase if get_phrase_syllables(phrase) == num_sylls
       counter += 1
     end
   end
 
-  def get_syll_fragment(link_word, num_syls)
-    # WIP
+  def get_splittable_syll_phrase(total_sylls, sub_sylls)
+    counter = 0
+    loop do
+      phrase = get_syll_phrase(total_sylls)
+      return phrase if is_splittable?(phrase, sub_sylls)
+      break if counter > 1000
+    end
+
+    return 'no dice'
   end
 
-  def print_sample_haiku
-    first = get_syll_sentence(5)
-    second = get_syll_sentence(7)
-    third = get_syll_sentence(5)
+  def is_splittable?(phrase, num_sylls)
+    sum = 0
 
-    puts format_haiku(first, second, third)
+    phrase.split.each do |word|
+      sum += get_syllable_count(word)
+      return true if sum == num_sylls
+      return false if sum > num_sylls
+    end
+
+    false
   end
 
   def get_sample_haiku
-    first = get_syll_sentence(5)
-    second = get_syll_sentence(7)
-    third = get_syll_sentence(5)
-
-    [first, second, third].map do |l|
-      l[0] = l[0].upcase
-      l
-    end
-    [first, second, third + '.']
+    first_limit = (0..12).to_a.sample
+    first = get_splittable_syll_phrase(12, 5)
+    second = get_syll_phrase(5)
+    format_haiku(first + ' ' + second)
   end
 
-  def format_haiku(line_1, line_2, line_3)
-    [line_1, line_2, line_3].map do |l|
-      l[0] = l[0].upcase
-      l = l.gsub(/"/, '')
-      l = l.strip
-      l
-    end.join("\n") + '.'
+  def format_haiku(text)
+    haiku = ''
+    words = text.split
+
+    words.each do |word|
+      haiku.concat(word + ' ')
+      haiku.concat("\n") if get_phrase_syllables(haiku) == 5 ||
+                            get_phrase_syllables(haiku) == 12
+    end
+
+    haiku.rstrip!.concat('.')
+
+    haiku.split("\n").map do |line|
+      line[0] = line[0].upcase
+      line
+    end.join("\n")
   end
 
   def is_acronym?(word)
@@ -175,10 +192,6 @@ class Scanner
 
   def to_s
     puts "total words: #{all_words.count}"
-    puts "total sentences: #{sentences.count}"
+    puts "total phrases: #{phrases.count}"
   end
 end
-
-# trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
-# scan = Scanner.new(trump_path)
-# binding.pry
