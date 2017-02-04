@@ -46,7 +46,7 @@ class Scanner
   def get_syllable_count(word)
     # Syllable rules developed in collaboration with Ruta Gajauskaite
     if word =~ /[0-9]/
-      
+      return get_num_syllable_count(word)
     end
     return word.length if is_acronym?(word)
 
@@ -161,10 +161,23 @@ class Scanner
   end
 
   def get_sample_haiku
-    first_limit = (0..12).to_a.sample
-    first = get_splittable_syll_phrase(12, 5)
-    second = get_syll_phrase(5)
-    format_haiku(first + ' ' + second)
+    opt = [1, 2, 3].sample
+    raw_haiku = ''
+
+    case opt
+    when 1
+      raw_haiku = get_syll_phrase(5) + ' ' +
+                  get_splittable_syll_phrase(12, 7)
+    when 2
+      raw_haiku = get_splittable_syll_phrase(12, 5) + ' ' +
+                  get_syll_phrase(5)
+    when 3
+      raw_haiku = get_syll_phrase(5) + ' ' +
+                  get_syll_phrase(7) + ' ' +
+                  get_syll_phrase(5)
+    end
+
+    format_haiku(raw_haiku)
   end
 
   def format_haiku(text)
