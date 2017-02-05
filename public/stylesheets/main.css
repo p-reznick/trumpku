@@ -1,8 +1,8 @@
 body {
   font-family: Helvetica, Arial, sans-serif;
   background: #BF0A30;
-  height: 100%;
-  width: 100%;
+  /*height: 100%;*/
+  /*width: 100%;*/
 }
 
 footer {
@@ -89,6 +89,18 @@ footer div.social_container:after {
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  body {
+    padding: 2rem;
+  }
+  footer {
+    padding: 2rem;
+  }
+  footer div.counter_container p {
+    font-size: 60px;
+  }
+  footer div.counter_container p:first-of-type {
+    font-size: 150px;
+  }
   header h1 {
     font-size: 240px;
     line-height: .8;
@@ -100,15 +112,11 @@ footer div.social_container:after {
     margin-top: 100px;
   }
   main div#haiku_container p {
-    font-size: 40px;
+    font-size: 50px;
     line-height: 1.5;
   }
   main div#refresh_button a {
     font-size: 60px;
-  }
-  footer div.social_container {
-    padding-left: 1rem;
-    padding-bottom: 1rem;
   }
   footer div.social_item {
     width: 250px;
