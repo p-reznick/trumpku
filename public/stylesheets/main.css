@@ -1,8 +1,6 @@
 body {
   font-family: Helvetica, Arial, sans-serif;
   background: #BF0A30;
-  /*height: 100%;*/
-  /*width: 100%;*/
 }
 
 footer {
@@ -44,6 +42,13 @@ footer div.facebook {
 
 footer div.twitter {
   background: url("/images/twitter_white.png");
+}
+
+footer > p {
+  color: #bfbfbf;
+  font-weight: normal;
+  padding: 0 0 1rem 1rem;
+  font-size: 14px;
 }
 
 header h1 {
@@ -122,5 +127,8 @@ footer div.social_container:after {
     width: 250px;
     height: 250px;
     background-size: cover;
+  }
+  footer > p {
+    font-size: 25px;
   }
 }
