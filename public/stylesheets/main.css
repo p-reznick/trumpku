@@ -1,7 +1,8 @@
 body {
   font-family: Helvetica, Arial, sans-serif;
   background: #BF0A30;
-  min-height: 760px;
+  height: 100%;
+  width: 100%;
 }
 
 footer {
@@ -78,4 +79,40 @@ main div#refresh_button a {
 
 main div#refresh_button a:hover {
   color: #8c8c8c;
+}
+
+/*Clearfix*/
+footer div.social_container:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  header h1 {
+    font-size: 240px;
+    line-height: .8;
+  }
+  header span {
+    display: block;
+  }
+  main div#haiku_container {
+    margin-top: 100px;
+  }
+  main div#haiku_container p {
+    font-size: 40px;
+    line-height: 1.5;
+  }
+  main div#refresh_button a {
+    font-size: 60px;
+  }
+  footer div.social_container {
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+  }
+  footer div.social_item {
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+  }
 }
