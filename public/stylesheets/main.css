@@ -11,6 +11,7 @@ footer {
   bottom: 0;
   left: 0;
   line-height: 1.2;
+  z-index: -100;
 }
 
 footer div.social_item {
@@ -62,6 +63,10 @@ header h1 {
 header h1 span,
 footer span {
   color: #002868;
+}
+
+main {
+  z-index: 1;
 }
 
 main div#haiku_container,
