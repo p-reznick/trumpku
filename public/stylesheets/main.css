@@ -5,6 +5,7 @@ body {
 
 footer {
   position: absolute;
+  margin-top: 400px;
   color: #002868;
   font-weight: 900;
   font-size: 44px;
@@ -52,12 +53,37 @@ footer > p {
   font-size: 14px;
 }
 
+header {
+  padding-left: 1rem;
+}
+
 header h1 {
   color: #fff;
   font-weight: 900;
   font-size: 120px;
   line-height: 1;
-  padding-left: 1rem;
+}
+
+main p.popup {
+  margin-left: 2rem;
+  margin-top: 2rem;
+  visibility: none;
+  background: #ccc;
+  color: #002868;
+  margin-top: 1.5rem;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 600;
+  width: 700px;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+main p.popup_trigger:hover ~ p.popup {
+  visibility: visible;
+  opacity: 1;
 }
 
 header h1 span,
@@ -67,6 +93,18 @@ footer span {
 
 main {
   z-index: 1;
+}
+
+main p.popup_trigger {
+  margin-left: 1rem;
+  color: #8c8c8c;
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+main p.popup_trigger:hover {
+  color: #002868;
 }
 
 main div#haiku_container,
@@ -88,7 +126,7 @@ main div#refresh_button a {
 }
 
 main div#refresh_button a:hover {
-  color: #8c8c8c;
+  color: #002868;
 }
 
 /*Clearfix*/
