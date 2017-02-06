@@ -163,7 +163,8 @@ footer div.social_container:after {
     font-size: 50px;
     line-height: 1.5;
   }
-  main div#refresh_button a {
+  main div#refresh_button a,
+  main p.popup_trigger {
     font-size: 60px;
   }
   footer div.social_item {
