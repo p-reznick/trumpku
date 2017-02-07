@@ -70,7 +70,7 @@ main p.popup {
   background: #ccc;
   color: #002868;
   margin-top: 1.5rem;
-  font-size: 28px;
+  font-size: 18px;
   line-height: 1.2;
   font-weight: 600;
   width: 700px;
@@ -78,6 +78,12 @@ main p.popup {
   transition: visibility 0s, opacity 0.5s linear;
   box-sizing: border-box;
   padding: 10px;
+}
+
+main p.popup a { 
+  font-size: 18px;
+  color: #002868;
+  font-style: normal;
 }
 
 main p.popup_trigger:hover ~ p.popup {
@@ -160,6 +166,9 @@ footer div.social_container:after {
   main div#haiku_container {
     margin-top: 50px;
   }
+  main p.popup {
+    font-size: 36px;
+  }
   main div#haiku_container p {
     font-size: 50px;
     line-height: 1.5;
@@ -174,6 +183,6 @@ footer div.social_container:after {
     background-size: cover;
   }
   footer > p {
-    font-size: 25px;
+    font-size: 14px;
   }
 }
