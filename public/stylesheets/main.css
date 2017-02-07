@@ -5,7 +5,6 @@ body {
 
 footer {
   position: absolute;
-  margin-top: 400px;
   color: #002868;
   font-weight: 900;
   font-size: 44px;
@@ -142,6 +141,8 @@ footer div.social_container:after {
   }
   footer {
     padding: 2rem;
+    position: static;
+    margin-top: 0;
   }
   footer div.counter_container p {
     font-size: 60px;
@@ -150,7 +151,7 @@ footer div.social_container:after {
     font-size: 150px;
   }
   header h1 {
-    font-size: 240px;
+    font-size: 180px;
     line-height: .8;
   }
   header span {
