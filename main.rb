@@ -29,6 +29,7 @@ get '/' do
   @haiku_count = settings.haiku_count
   @startup_date = settings.startup_date
   @haiku = get_haiku
+  @twitter_haiku = @haiku.join("\n").gsub(/ /, '%')
   erb :home
 end
 

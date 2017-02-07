@@ -14,7 +14,8 @@ footer {
   z-index: -100;
 }
 
-footer div.social_item {
+footer a.social_item {
+  display: inline-block;
   float: left;
   margin: 1rem;
   width: 96px;
@@ -33,15 +34,15 @@ footer div.counter_container p:nth-of-type(2) {
   color: #8c8c8c;
 }
 
-footer div.instagram {
+footer a.instagram {
   background: url("/images/insta_white.png");
 }
 
-footer div.facebook {
+footer a.facebook {
   background: url("/images/fb_white.png");
 }
 
-footer div.twitter {
+footer a.twitter {
   background: url("/images/twitter_white.png");
 }
 
@@ -101,6 +102,7 @@ main {
 }
 
 main p.popup_trigger {
+  display: inline-block;
   margin-left: 1rem;
   color: #8c8c8c;
   font-size: 36px;
