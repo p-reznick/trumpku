@@ -39,6 +39,11 @@ footer a.instagram {
 }
 
 footer a.facebook {
+  display: inline-block;
+  float: left;
+  margin: 1rem;
+  width: 96px;
+  height: 96px;
   background: url("/images/fb_white.png");
 }
 

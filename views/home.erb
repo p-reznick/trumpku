@@ -5,47 +5,21 @@
 
 <html lang="en-US">
   <head>
-    <title>Trumpku</title>
+    <title>Trumpku.net</title>
+    <meta property="og:title"         content="Trumpku.net" />
+    <meta property="og:url"           content="http://www.trumpku.net/" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:description"   content=<%= "#{@haiku.join("\n")}" %>/>
     <meta charset="UTF-8" />
-    <meta name="description" content="<%= @haiku.join("\n") %>" />
+    <meta name="description" content=<%= "Generates a semi-random 5-7-5 haiku composed from Donald Trump's inaugural address and campaign speeches." %> />
     <link rel="stylesheet" type="text/css" href="./stylesheets/reset.css">
     <link rel="stylesheet" type="text/css" href="./stylesheets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="shortcut icon" href="/images/trumpku_icon.png" type="image/x-icon" />
-    <meta property="og:url"           content="http://www.trumpku.net/" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="Trumpku" />
-    <meta property="og:description"   content="Generates a semi-random 5-7-5 haiku composed from Donald Trump's inaugural address and campaign speeches." />
-    <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" />
   </head>
   <body>
-    <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-    <!--End Facebook code-->
-    <!--Load Twitter widget-->
-    <script>window.twttr = (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0],
-        t = window.twttr || {};
-      if (d.getElementById(id)) return t;
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://platform.twitter.com/widgets.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    
-      t._e = [];
-      t.ready = function(f) {
-        t._e.push(f);
-      };
-    
-      return t;
-    }(document, "script", "twitter-wjs"));</script>
+    <script src="./scripts/social_scripts.js"></script>
     <header>
       <h1>Trump<span>ku</span></h1>
     </header>
@@ -67,10 +41,10 @@
         <p>Trumpkus <span>since <%= @startup_date %></span></p>
       </div>
       <div class="social_container">
-        <div class="fb-share-button" data-href="http://www.trumpku.net/" data-layout="button" data-mobile-iframe="true">
-          <a class="social_item facebook fb-xfbml-parse-ignore" title="Share this Trumpku on Facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.trumpku.net%2F&amp;src=sdkpreparse"></a>
+        <div class="fb-share-button" id="facebook" data-href="http://www.trumpku.net/" data-layout="icon" data-mobile-iframe="true">
+          <a class="fb-xfbml-parse-ignore facebook social_item" title="Share this Trumpku on Facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.trumpku.net%2F&amp;src=sdkpreparse"></a>
         </div>
-        <a class="social_item twitter" href=<%= "https://twitter.com/intent/tweet?text=" + @twitter_haiku %>></a>
+        <a class="social_item twitter" title="Share this Trumpku on Twitter" href=<%= "https://twitter.com/intent/tweet?text=" + @twitter_haiku %>></a>
         <a class="social_item instagram" href="#"></a>
       </div>
       <p>&copy; 2017 Peter Reznick All Rights Reserved</p>
