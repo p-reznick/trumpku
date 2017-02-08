@@ -9,7 +9,8 @@ MONTHS = %w(Jan Feb Mar Apr May June July Aug Sep Oct Nov Dec)
 configure do
   set :haiku_count, 0
   t = Time.now
-  set :startup_date, "#{t.day} #{MONTHS[t.month - 1]}"
+  # set :startup_date, "#{t.day} #{MONTHS[t.month - 1]}"
+  set :startup_date, t.to_s
 end
 
 def get_haiku
