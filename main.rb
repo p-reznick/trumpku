@@ -22,6 +22,13 @@ def get_haiku
   scan.get_sample_haiku
 end
 
+def format_for_twitter(raw_haiku)
+  raw_haiku.join("\n").
+  gsub(/\n/m, '%0A').
+  gsub(/ /, '%20').
+  concat('%0A%0Awww%2ETrumpku%2Enet')
+end
+
 not_found do
   redirect '/'
 end
@@ -30,7 +37,7 @@ get '/' do
   @haiku_count = settings.haiku_count
   @startup_date = settings.startup_date
   @haiku = get_haiku
-  @twitter_haiku = @haiku.join("\n").gsub(/ /, '%')
+  @twitter_haiku = format_for_twitter(@haiku)
   erb :home
 end
 
