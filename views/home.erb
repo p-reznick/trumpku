@@ -18,35 +18,37 @@
     <link rel="shortcut icon" href="/images/trumpku_icon.png" type="image/x-icon" />
   </head>
   <body>
-    <div id="fb-root"></div>
-    <script src="./scripts/social_scripts.js"></script>
-    <header>
-      <h1>Trump<span>ku</span></h1>
-    </header>
-    <main>
-      <div id="haiku_container">
-        <p><%= @haiku[0] %></p>
-        <p><%= @haiku[1] %></p>
-        <p><%= @haiku[2] %></p>
-      </div>
-      <div id="refresh_button">
-        <a href="/new_haiku">Another One</a>
-      </div>
-      <p class="popup_trigger">What is Trumpku?</p>
-      <p class="popup">Trump(hai)ku generates a five-seven-five haiku using phrases selected semi-randomly from transcripts of our glorious leader's inaugural address and speeches on the campaign trail. Thanks to Ryan McDermott for making the text data available on GitHub.</p>
-    </main>
-    <footer>
-      <div class="counter_container">
-        <p><%= @haiku_count %></p>
-        <p>Trumpkus <span>since <%= @startup_date %></span></p>
-      </div>
-      <div class="social_container">
-        <div class="fb-share-button" id="facebook" data-href="http://www.trumpku.net/" data-layout="icon" data-mobile-iframe="true">
-          <a class="fb-xfbml-parse-ignore facebook social_item" title="Share this Trumpku on Facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.trumpku.net%2F&amp;src=sdkpreparse"></a>
+    <div class="wrapper">
+      <div id="fb-root"></div>
+      <script src="./scripts/social_scripts.js"></script>
+      <header>
+        <h1>Trump<span>ku</span></h1>
+      </header>
+      <main>
+        <div id="haiku_container">
+          <p><%= @haiku[0] %></p>
+          <p><%= @haiku[1] %></p>
+          <p><%= @haiku[2] %></p>
         </div>
-        <a class="social_item twitter" title="Share this Trumpku on Twitter" href=<%= "https://twitter.com/intent/tweet?text=" + @twitter_haiku %>></a>
-      </div>
-      <p>&copy; 2017 Peter Reznick All Rights Reserved</p>
-    </footer>
+        <div id="refresh_button">
+          <a href="/new_haiku">Another One</a>
+        </div>
+        <p class="popup_trigger">What is Trumpku?</p>
+        <p class="popup">Trump(hai)ku generates a five-seven-five haiku using phrases selected semi-randomly from transcripts of our glorious leader's inaugural address and speeches on the campaign trail. Thanks to Ryan McDermott for making the text data available on GitHub.</p>
+      </main>
+      <footer>
+        <div class="counter_container">
+          <p><%= @haiku_count %></p>
+          <p>Trumpkus <span>since <%= @startup_date %></span></p>
+        </div>
+        <div class="social_container">
+          <div class="fb-share-button" id="facebook" data-href="http://www.trumpku.net/" data-layout="icon" data-mobile-iframe="true">
+            <a class="fb-xfbml-parse-ignore facebook social_item" title="Share this Trumpku on Facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.trumpku.net%2F&amp;src=sdkpreparse"></a>
+          </div>
+          <a class="social_item twitter" title="Share this Trumpku on Twitter" href=<%= "https://twitter.com/intent/tweet?text=" + @twitter_haiku %>></a>
+        </div>
+        <p>&copy; 2017 Peter Reznick All Rights Reserved</p>
+      </footer>
+    </div>
   </body>
 </html>

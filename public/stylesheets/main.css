@@ -86,12 +86,6 @@ main p.popup {
   padding: 10px;
 }
 
-main p.popup a { 
-  font-size: 18px;
-  color: #002868;
-  font-style: normal;
-}
-
 main p.popup_trigger:hover ~ p.popup {
   visibility: visible;
   opacity: 1;
@@ -153,9 +147,9 @@ footer div.social_container:after {
     padding: 2rem;
   }
   footer {
-    padding: 2rem;
+    padding: 1rem;
     position: static;
-    margin-top: 0;
+    margin-top: 100px;
   }
   footer div.counter_container p {
     font-size: 60px;
@@ -175,6 +169,10 @@ footer div.social_container:after {
   }
   main p.popup {
     font-size: 36px;
+    display: none;
+  }
+  main p.popup_trigger:hover ~ p.popup {
+    display: block;
   }
   main div#haiku_container p {
     font-size: 50px;
@@ -184,9 +182,9 @@ footer div.social_container:after {
   main p.popup_trigger {
     font-size: 60px;
   }
-  footer div.social_item {
-    width: 250px;
-    height: 250px;
+  footer a.social_item {
+    width: 200px;
+    height: 200px;
     background-size: cover;
   }
   footer > p {
