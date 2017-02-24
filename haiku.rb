@@ -31,50 +31,41 @@ class Scanner
     end
   end
 
-  def gen_word_indices
-    hash = {}
-    all_words.each_with_index do |word, index|
-      if hash[word]
-        hash[word] << index
-      else
-        hash[word] = [index]
-      end
-    end
-    hash
-  end
-
   def get_syllable_count(word)
-    # Syllable rules developed in collaboration with Ruta Gajauskaite
-    if word =~ /[0-9]/
-      return get_num_syllable_count(word)
-    end
-    return word.length if is_acronym?(word)
+    count = 0
 
-    count = word.scan(/[aeiou]+/i).length
+    word = make_english_word(word)
 
-    if word =~ /[^aeiouy]e\z/ && count > 1
-      count -= 1
-    elsif word =~ /[^aeiou]y\z/
-      count += 1
-    elsif word =~ /[%$]/
-      count += 2
-    elsif word =~ /[&\+@]/
-      count += 1
+    if is_acronym?(word)
+      count = word.length
+    else
+      count += word.scan(/[aeiou]+/i).length
+
+      if word =~ /[^aeiouy]e\z/ && count > 1
+        count -= 1
+      elsif word =~ /[^aeiou]y\z/
+        count += 1
+      elsif word =~ /[%$]/
+        count += 2
+      elsif word =~ /[&\+@]/
+        count += 1
+      end
     end
 
     count
   end
 
-  def get_num_syllable_count(word)
-    word = decimal_to_word(word)
-    word.split.each.inject(0) do |sum, w|
-      sum += get_syllable_count(w)
-    end
+  def make_english_word(word)
+    return word unless word =~ /\d/
+
+    word = word.gsub(/(\d+)/) { decimal_to_word($1) }
+
+    word
   end
 
   def decimal_to_word(word)
     # handles decimal numbers 0 to 999999
-    word = word.scan(/[0-9]+/)[0]
+    word = word.scan(/\d+/)[0]
 
     decimal = word.to_s.chars.reverse
     word_arr = []
