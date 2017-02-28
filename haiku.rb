@@ -37,7 +37,7 @@ class Scanner
     word = make_english_word(word)
 
     if is_acronym?(word)
-      count = word.length
+      count = get_acronym_syllable_count(word)
     else
       count += word.scan(/[aeiou]+/i).length
 
@@ -55,8 +55,14 @@ class Scanner
     count
   end
 
+  def get_acronym_syllable_count(word)
+    count = 0
+    count += word =~ /\./ ? word.length / 2 : word.length
+    return word =~ /w/i ? count + 1 : count
+  end
+
   def make_english_word(word)
-    return word unless word =~ /\d/
+    return word unless word =~ /\d+/
 
     word = word.gsub(/(\d+)/) { decimal_to_word($1) }
 
@@ -104,7 +110,7 @@ class Scanner
   end
 
   def get_phrases
-    split_pattern = /[\.\,;:!?]/
+    split_pattern = /([;:!?]|,\D|\.\s)/
     phrases = text.split(split_pattern).map do |phrase|
       phrase.gsub(/\n/, '').strip
     end.delete_if { |phrase| phrase =~ /barron/i }
@@ -185,14 +191,12 @@ class Scanner
 
     haiku.split("\n").map do |line|
       line[0] = line[0].upcase
-      p line
       line
     end
   end
 
   def is_acronym?(word)
-    (word =~ /\A[a-z\.]{#{word.length}}\z/i) ? true : false
-    false
+    (word =~ /(\A([A-Z]\.){2,}+\z|\A([A-Z]){2,}+\z)/) ? true : false
   end
 
   def to_s
@@ -200,3 +204,6 @@ class Scanner
     puts "total phrases: #{phrases.count}"
   end
 end
+
+trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
+test = Scanner.new(trump_path)
