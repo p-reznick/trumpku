@@ -1,15 +1,15 @@
+require 'memcachier'
 require 'dalli'
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'tilt/erubis'
 
 require_relative 'haiku.rb'
-require_relative 'memcachier_setup.rb'
 
 MONTHS = %w(Jan Feb Mar Apr May June July Aug Sep Oct Nov Dec)
 
 configure do
-  startup_date = CACHE.get('start_date') || Time.now
+  startup_date = settings.cache.get('start_date') || Time.now
   set :startup_date, startup_date
 end
 
@@ -24,8 +24,6 @@ end
 def get_haiku
   trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
   scan = Scanner.new(trump_path)
-
-  increment_count
 
   scan.get_sample_haiku
 end
@@ -42,8 +40,6 @@ not_found do
 end
 
 get '/' do
-  @haiku_count = get_count
-  @startup_date = settings.startup_date
   @haiku = get_haiku
   @twitter_haiku = format_for_twitter(@haiku)
   erb :home

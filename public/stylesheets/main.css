@@ -30,7 +30,8 @@ footer div.counter_container {
   margin-left: 1rem;
 }
 
-footer div.counter_container p:nth-of-type(1) {
+footer div.counter_container p:nth-of-type(1),
+a[title=web_analytics] {
   font-size: 40px;
 }
 
