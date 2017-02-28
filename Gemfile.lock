@@ -3,10 +3,7 @@ GEM
   specs:
     backports (3.6.8)
     coderay (1.1.1)
-    connection_pool (2.2.1)
-    dalli (2.7.6)
     erubis (2.7.0)
-    memcachier (0.0.2)
     method_source (0.8.2)
     multi_json (1.12.1)
     pry (0.10.4)
@@ -37,10 +34,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  connection_pool
-  dalli
   erubis
-  memcachier
   pry
   puma
   sinatra
