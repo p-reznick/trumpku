@@ -173,7 +173,7 @@ class Scanner
 
   def format_haiku(text)
     haiku = ''
-    words = text.split
+    words = text.gsub(/["'-]/, '').split
 
     words.each do |word|
       haiku.concat(word + ' ')
@@ -185,6 +185,7 @@ class Scanner
 
     haiku.split("\n").map do |line|
       line[0] = line[0].upcase
+      p line
       line
     end
   end
