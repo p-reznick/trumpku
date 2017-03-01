@@ -136,7 +136,7 @@ footer div.social_container:after {
   clear: both;
 }
 
-@media (min-width : 320px) and (max-width : 480px) {
+@media (max-width: 768px) {
   footer {
     position: static;
     margin-top: 20px;
@@ -178,9 +178,6 @@ footer div.social_container:after {
     background-size: cover;
   }
   footer > p {
-    position: absolute;
-    bottom: .2rem;
-    left: .2rem;
-    font-size: 14px;
+    display: none;
   }
 }
