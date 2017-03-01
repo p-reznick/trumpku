@@ -113,7 +113,8 @@ class Scanner
     split_pattern = /([;:!?]|,\D|\.\s)/
     phrases = text.split(split_pattern).map do |phrase|
       phrase.gsub(/\n/, '').strip
-    end.delete_if { |phrase| phrase =~ /barron/i }
+    end.delete_if { |phrase| phrase =~ /barron/i ||
+                             phrase =~ /Mr\./i }
   end
 
   def get_words
