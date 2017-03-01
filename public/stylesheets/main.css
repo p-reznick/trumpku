@@ -136,23 +136,16 @@ footer div.social_container:after {
   clear: both;
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-  body {
-    padding: 2rem;
-  }
+@media (min-width : 320px) and (max-width : 480px) {
   footer {
-    padding: 1rem;
     position: static;
-    margin-top: 100px;
+    margin-top: 20px;
   }
-  footer div.counter_container p {
-    font-size: 60px;
-  }
-  footer div.counter_container p:first-of-type {
-    font-size: 150px;
+  footer .social_container {
+    padding-left: .5rem;
   }
   header h1 {
-    font-size: 180px;
+    font-size: 100px;
     line-height: .8;
   }
   header span {
@@ -160,28 +153,34 @@ footer div.social_container:after {
   }
   main div#haiku_container {
     margin-top: 50px;
+    margin-left: .5rem;
   }
   main p.popup {
-    font-size: 36px;
     display: none;
   }
-  main p.popup_trigger:hover ~ p.popup {
-    display: block;
+  main p.popup_trigger {
+    display: none;
   }
   main div#haiku_container p {
-    font-size: 50px;
-    line-height: 1.5;
+    font-size: 25px;
+    padding-left: .5rem;
+    margin-bottom: .5rem;
+    line-height: 1;
   }
   main div#refresh_button a,
   main p.popup_trigger {
-    font-size: 60px;
+    font-size: 30px;
+    margin-left: .5rem;
   }
   footer a.social_item {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     background-size: cover;
   }
   footer > p {
+    position: absolute;
+    bottom: .2rem;
+    left: .2rem;
     font-size: 14px;
   }
 }
