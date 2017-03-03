@@ -14,7 +14,7 @@ class Scanner
            'ten seven' => 'seventeen',
            'ten eight' => 'eighteen',
            'ten nine' => 'nineteen'}
-  MULTISYLLABLES = %w(ia io ua oi nuclear eo ple\z)
+  MULTISYLLABLES = %w(ia io[^n] ua oi nuclear eo ple\z)
 
   def initialize(text)
     @text = get_text(text)
@@ -230,8 +230,10 @@ test = Scanner.new(trump_path)
 # p test.get_syllable_count('controlled') == 2
 # p test.get_syllable_count('problems') == 2
 # p test.get_syllable_count('homestead') == 2
+# p test.get_syllable_count('honey') == 2
 # p test.get_syllable_count('money') == 2
-p test.get_syllable_count('honest') == 1
+# p test.get_syllable_count('honest') == 1
+# p test.get_syllable_count('action') == 2
 # p test.get_syllable_count('rodeo') == 3
 # p test.get_syllable_count('odeon') == 3
 # p test.get_syllable_count('oreo') == 3
