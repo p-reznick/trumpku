@@ -180,9 +180,10 @@ class Scanner
 
   def format_haiku(text)
     haiku = ''
-    words = text.gsub(/["'-]/, '').split
+    words = text.gsub(/"/, '').split
 
     words.each do |word|
+      next if word =~ /[\-—–]/
       haiku.concat(word + ' ')
       haiku.concat("\n") if get_phrase_syllables(haiku) == 5 ||
                             get_phrase_syllables(haiku) == 12
