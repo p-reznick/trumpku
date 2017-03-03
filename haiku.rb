@@ -14,6 +14,7 @@ class Scanner
            'ten seven' => 'seventeen',
            'ten eight' => 'eighteen',
            'ten nine' => 'nineteen'}
+  MULTISYLLABLES = %w(ia io ua oi nuclear ple\z)
 
   def initialize(text)
     @text = get_text(text)
@@ -41,15 +42,11 @@ class Scanner
     else
       count += word.scan(/[aeiou]+/i).length
 
-      if word =~ /[^aeiouy]e\z/ && count > 1
-        count -= 1
-      elsif word =~ /[^aeiou]y\z/
-        count += 1
-      elsif word =~ /[%$]/
-        count += 2
-      elsif word =~ /[&\+@]/
-        count += 1
-      end
+      count -= 1 if word =~ /[^aeiouy]e\z/ && count > 1
+      count += MULTISYLLABLES.select { |cluster| word =~ /#{cluster}/ }.count
+      count += 1 if word =~ /[^aeiou]y\z/
+      count += 2 if word =~ /[%$]/
+      count += 1 if word =~ /[&\+@]/
     end
 
     count
@@ -207,5 +204,22 @@ class Scanner
   end
 end
 
-trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
-test = Scanner.new(trump_path)
+# SYLLABLE TEST SUITE
+# trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
+# test = Scanner.new(trump_path)
+# p test.get_syllable_count('') == 0
+# p test.get_syllable_count('hey') == 1
+# p test.get_syllable_count('bee') == 1
+# p test.get_syllable_count('sea') == 1
+# p test.get_syllable_count('jeep') == 1
+# p test.get_syllable_count('rolled') == 1
+# p test.get_syllable_count('forty') == 2
+# p test.get_syllable_count('briar') == 2
+# p test.get_syllable_count('prior') == 2
+# p test.get_syllable_count('boing') == 2
+# p test.get_syllable_count('people') == 2
+# p test.get_syllable_count('apple') == 2
+# p test.get_syllable_count('controlled') == 2
+# p test.get_syllable_count('forty five') == 3
+# p test.get_syllable_count('nuclear') == 3
+# p test.get_syllable_count('adrianople') == 5
