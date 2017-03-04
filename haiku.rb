@@ -1,4 +1,5 @@
 require 'pry'
+require 'ruby_rhymes'
 
 class Scanner
   attr_accessor :text, :all_words, :phrases
@@ -14,7 +15,7 @@ class Scanner
            'ten seven' => 'seventeen',
            'ten eight' => 'eighteen',
            'ten nine' => 'nineteen'}
-  MULTISYLLABLES = %w(ia io[^n] ua oi nuclear eo ple\z)
+  MULTISYLLABLES = %w(ia io[^n] ua oi ed\z nuclear eo [^aeiou]le\z)
 
   def initialize(text)
     @text = get_text(text)
@@ -34,23 +35,16 @@ class Scanner
 
   def get_syllable_count(word)
     count = 0
+    return 0 if word =~ /\A([?!\-—–'";:$%]|--|——)\z/
+    return get_acronym_syllable_count(word) if is_acronym?(word)
 
-    word = make_english_word(word)
-
-    if is_acronym?(word)
-      count = get_acronym_syllable_count(word)
-    else
-      count += word.scan(/[aeiou]+/i).length
-
-      count -= 1 if word =~ /[^aeiouy]e\z/ && count > 1
-      # count -= 1 if word =~ /[aeiou][^aeiou]e([^oy]|[^aeiou]+)\z/ # internal silent e
-      count += MULTISYLLABLES.select { |cluster| word =~ /#{cluster}/ }.count
-      count += 1 if word =~ /[^aeiou]y\z/
-      count += 2 if word =~ /[%$]/
-      count += 1 if word =~ /[&\+@]/
+    begin
+      count = make_english_word(word).to_phrase.syllables
+    rescue
+      puts "Error thrown with word: #{word}"
     end
-
-    count
+      count += 2 if word =~ /[%$]/
+      count
   end
 
   def get_acronym_syllable_count(word)
@@ -61,6 +55,8 @@ class Scanner
 
   def make_english_word(word)
     return word unless word =~ /\d+/
+
+    word = word.gsub(/,/, '')
 
     word = word.gsub(/(\d+)/) { decimal_to_word($1) }
 
@@ -102,12 +98,6 @@ class Scanner
   end
 
   def get_phrase_syllables(string)
-    # words = string.split.inject([]) do |word, all|
-    #   result = make_english_word(word)
-    #   p result
-    #   result =~ /\s/ ? all.concat(result.split) : all << result
-    # end
-
     string.split.inject(0) do |sum, word|
       sum += get_syllable_count(word)
     end
@@ -115,10 +105,12 @@ class Scanner
 
   def get_phrases
     split_pattern = /([;:!?]|,\D|\.\s)/
-    phrases = text.split(split_pattern).map do |phrase|
+    all = text.split(split_pattern).map do |phrase|
       phrase.gsub(/\n/, '').strip
-    end.delete_if { |phrase| phrase =~ /barron/i ||
-                             phrase =~ /Mr\./i }
+    end
+
+    all.delete_if { |phrase| phrase =~ /barron/i ||
+                             phrase =~ /\A[.?,]\z/ }
   end
 
   def get_words
@@ -214,31 +206,3 @@ end
 # SYLLABLE TEST SUITE
 trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
 test = Scanner.new(trump_path)
-# p test.get_syllable_count('') == 0
-# p test.get_syllable_count('hey') == 1
-# p test.get_syllable_count('bee') == 1
-# p test.get_syllable_count('sea') == 1
-# p test.get_syllable_count('jeep') == 1
-# p test.get_syllable_count('rolled') == 1
-# p test.get_syllable_count('peon') == 2
-# p test.get_syllable_count('forty') == 2
-# p test.get_syllable_count('briar') == 2
-# p test.get_syllable_count('prior') == 2
-# p test.get_syllable_count('boing') == 2
-# p test.get_syllable_count('people') == 2
-# p test.get_syllable_count('apple') == 2
-# p test.get_syllable_count('controlled') == 2
-# p test.get_syllable_count('problems') == 2
-# p test.get_syllable_count('homestead') == 2
-# p test.get_syllable_count('honey') == 2
-# p test.get_syllable_count('money') == 2
-# p test.get_syllable_count('honest') == 1
-# p test.get_syllable_count('action') == 2
-# p test.get_syllable_count('rodeo') == 3
-# p test.get_syllable_count('odeon') == 3
-# p test.get_syllable_count('oreo') == 3
-# p test.get_phrase_syllables('Within 24 hours')
-# p test.make_english_word('24')
-# p test.get_syllable_count('nuclear') == 3
-# p test.get_syllable_count('adrianople') == 5
-# p test.get_phrase_syllables('24 years') == 4

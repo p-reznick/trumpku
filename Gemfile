@@ -7,6 +7,7 @@ gem 'sinatra-contrib'
 gem 'tilt'
 gem 'erubis'
 gem 'pry'
+gem 'ruby_rhymes'
 
 group :production do
   gem 'puma'
