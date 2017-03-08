@@ -41,7 +41,8 @@ class Scanner
     begin
       count = make_english_word(word).to_phrase.syllables
     rescue
-      puts "Error thrown with word: #{word}"
+      puts "Error thrown with word:"
+      p word
     end
       count += 2 if word =~ /[%$]/
       count
@@ -104,7 +105,7 @@ class Scanner
   end
 
   def get_phrases
-    split_pattern = /([;:!?]|,\D|\.\s)/
+    split_pattern = /([;:!?]|,\D|\.)/
     all = text.split(split_pattern).map do |phrase|
       phrase.gsub(/\n/, '').strip
     end
