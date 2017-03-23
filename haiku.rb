@@ -203,7 +203,3 @@ class Scanner
     puts "total phrases: #{phrases.count}"
   end
 end
-
-# SYLLABLE TEST SUITE
-trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
-test = Scanner.new(trump_path)
