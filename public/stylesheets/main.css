@@ -63,10 +63,10 @@ header h1 {
   line-height: 1;
 }
 
-main p.popup {
+main p#popup {
   margin-left: 2rem;
   margin-top: 2rem;
-  visibility: none;
+  opacity: 0;
   background: #ccc;
   color: #002868;
   margin-top: 1.5rem;
@@ -74,15 +74,9 @@ main p.popup {
   line-height: 1.2;
   font-weight: 600;
   width: 400px;
-  opacity: 0;
   transition: visibility 0s, opacity 0.5s linear;
   box-sizing: border-box;
   padding: 10px;
-}
-
-main p.popup_trigger:hover ~ p.popup {
-  visibility: visible;
-  opacity: 1;
 }
 
 header h1 span,
@@ -94,8 +88,9 @@ main {
   z-index: 1;
 }
 
-main p.popup_trigger {
+main p#popup_trigger {
   display: inline-block;
+  cursor: pointer;
   margin-left: 1rem;
   color: #8c8c8c;
   font-size: 24px;
@@ -103,7 +98,7 @@ main p.popup_trigger {
   font-weight: 600;
 }
 
-main p.popup_trigger:hover {
+main p#popup_trigger:hover {
   color: #002868;
 }
 
@@ -155,10 +150,10 @@ footer div.social_container:after {
     margin-top: 50px;
     margin-left: .5rem;
   }
-  main p.popup {
+  main p#popup {
     display: none;
   }
-  main p.popup_trigger {
+  main p#popup_trigger {
     display: none;
   }
   main div#haiku_container p {
@@ -168,10 +163,6 @@ footer div.social_container:after {
     line-height: 1;
   }
   main div#refresh_button a,
-  main p.popup_trigger {
-    font-size: 30px;
-    margin-left: .5rem;
-  }
   footer a.social_item {
     width: 100px;
     height: 100px;
