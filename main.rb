@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'tilt/erubis'
 
-require_relative 'haiku.rb'
+require_relative 'scanner.rb'
 
 def get_haiku
   trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
