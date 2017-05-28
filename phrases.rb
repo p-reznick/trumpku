@@ -4,6 +4,19 @@ require 'ruby_rhymes'
 class Phrases
   attr_accessor :all, :start_phrases, :mid_phrases, :end_phrases, :text
 
+  ONES = %w(zero one two three four five six seven eight nine)
+  TENS = %w(zero ten twenty thirty forty fifty sixty seventy eighty ninety)
+  TEENS = {'ten one' => 'eleven',
+           'ten two' => 'twelve',
+           'ten three' => 'thirteen',
+           'ten four' => 'fourteen',
+           'ten five' => 'fifteen',
+           'ten six' => 'sixteen',
+           'ten seven' => 'seventeen',
+           'ten eight' => 'eighteen',
+           'ten nine' => 'nineteen'}
+  MULTISYLLABLES = %w(ia io[^n] ua oi ed\z nuclear eo [^aeiou]le\z)
+
   def initialize(text)
     self.text = get_clean_text(text)
     self.start_phrases = get_start_phrases
@@ -39,7 +52,7 @@ class Phrases
   def get_syllable_count(word)
     count = 0
     return 0 if word =~ /\A([?!\-—–'";:$%]|--|——)\z/
-    # return get_acronym_syllable_count(word) if is_acronym?(word)
+    return get_acronym_syllable_count(word) if is_acronym?(word)
 
     begin
       count = make_english_word(word).to_phrase.syllables
@@ -59,12 +72,8 @@ class Phrases
 
   def make_english_word(word)
     return word unless word =~ /\d+/
-
     word = word.gsub(/,/, '')
-
     word = word.gsub(/(\d+)/) { decimal_to_word($1) }
-
-    word
   end
 
   def get_phrase(phase, num_syllables)
@@ -120,8 +129,37 @@ class Phrases
 
     word_str
   end
-end
 
-trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
-p = Phrases.new(trump_path)
-binding.pry
+  def is_acronym?(word)
+    (word =~ /(\A([A-Z]\.){2,}+\z|\A([A-Z]){2,}+\z)/) ? true : false
+  end
+
+  def get_acronym_syllable_count(word)
+    count = 0
+    count += word =~ /\./ ? word.length / 2 : word.length
+    return word =~ /w/i ? count + 1 : count
+  end
+
+    # def get_splittable_syll_phrase(total_sylls, sub_sylls)
+    #   counter = 0
+    #   loop do
+    #     phrase = get_syll_phrase(total_sylls)
+    #     return phrase if is_splittable?(phrase, sub_sylls)
+    #     break if counter > 1000
+    #   end
+    #
+    #   return 'no dice'
+    # end
+    #
+    # def is_splittable?(phrase, num_sylls)
+    #   sum = 0
+    #
+    #   phrase.split.each do |word|
+    #     sum += get_syllable_count(word)
+    #     return true if sum == num_sylls
+    #     return false if sum > num_sylls
+    #   end
+    #
+    #   false
+    # end
+end
