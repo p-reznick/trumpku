@@ -10,24 +10,16 @@ class Haiku
   end
 
   def get_sample_haiku
-    opt = [1, 2, 3].sample
-    raw_haiku = ''
+    opt = 1
 
-    raw_haiku = phrases.get_phrase('start', 5) + "\n" +
-                phrases.get_phrase('mid', 7) + "\n" +
-                phrases.get_phrase('end', 5)
-    # case opt
-    # when 1
-    #   raw_haiku = phrases.get_syll_phrase(5) + ' ' +
-    #               phrases.get_splittable_syll_phrase(12, 7)
-    # when 2
-    #   raw_haiku = phrases.get_splittable_syll_phrase(12, 5) + ' ' +
-    #               phrases.get_syll_phrase(5)
-    # when 3
-    #   raw_haiku = phrases.get_syll_phrase(5) + ' ' +
-    #               phrases.get_syll_phrase(7) + ' ' +
-    #               phrases.get_syll_phrase(5)
-    # end
+    case opt
+    when 1
+      raw_haiku = phrases.get_phrase('start', 5) + "\n" +
+                  phrases.get_phrase('mid', 7) + "\n" +
+                  phrases.get_phrase('end', 5)
+    when 2
+      # raw_haiku = phrases.get_phrase('start', )
+    end
 
     format_haiku(raw_haiku)
   end
@@ -44,7 +36,7 @@ class Haiku
     # end
     #
     # haiku.rstrip!.concat('.')
-
+    p text
     text.split("\n").map do |line|
       line[0] = line[0].upcase
       line

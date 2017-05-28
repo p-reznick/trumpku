@@ -31,21 +31,21 @@ class Phrases
       end
     else
       text
-    end.gsub("\n", '')
+    end.gsub(/(\n|["])/, '')
   end
 
   def get_start_phrases
-    phrases = text.scan(/\.\s+[a-z '-]+/i)
+    phrases = text.scan(/\.\s+[^.,;—-]+/i)
     phrases.map { |phrase| phrase.gsub(/\.\s+/, '').strip }
   end
 
   def get_mid_phrases
-    phrases = text.scan(/[,;]\s[^,.;]+[,;]/i)
+    phrases = text.scan(/[,;—-]\s[^,.;]+[,;—-]/i)
     phrases.map { |phrase| phrase.gsub(/[,;]/, '').strip }
   end
 
   def get_end_phrases
-    phrases = text.scan(/[a-z '-]+\.\s/i)
+    phrases = text.scan(/[^.,;—-]+\.\s/i)
     phrases.map { |phrase| phrase.gsub(/\.\s{0,}/, '').strip }
   end
 
