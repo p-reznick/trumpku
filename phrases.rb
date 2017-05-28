@@ -12,45 +12,116 @@ class Phrases
   end
 
   def get_clean_text(text)
-    text.gsub("\n", '')
+    if text =~ /\.(txt|md)\z/
+      File.open(text, 'r').each.inject('') do |string, line|
+        string.concat(line)
+      end
+    else
+      text
+    end.gsub("\n", '')
   end
 
   def get_start_phrases
-    text.scan(/\.\s+[a-z '-]+/i)
+    phrases = text.scan(/\.\s+[a-z '-]+/i)
+    phrases.map { |phrase| phrase.gsub(/\.\s+/, '').strip }
   end
 
   def get_mid_phrases
-    text.scan(/[,]\s[^,.;]+[.,]/i)
+    phrases = text.scan(/[,;]\s[^,.;]+[,;]/i)
+    phrases.map { |phrase| phrase.gsub(/[,;]/, '').strip }
   end
 
   def get_end_phrases
-    text.scan(/[a-z '-]+\.\s/i)
+    phrases = text.scan(/[a-z '-]+\.\s/i)
+    phrases.map { |phrase| phrase.gsub(/\.\s{0,}/, '').strip }
+  end
+
+  def get_syllable_count(word)
+    count = 0
+    return 0 if word =~ /\A([?!\-—–'";:$%]|--|——)\z/
+    # return get_acronym_syllable_count(word) if is_acronym?(word)
+
+    begin
+      count = make_english_word(word).to_phrase.syllables
+    rescue
+      puts "Error thrown with word:"
+      p word
+    end
+      count += 2 if word =~ /[%$]/
+      count
+  end
+
+  def get_phrase_syllables(string)
+    string.split.inject(0) do |sum, word|
+      sum += get_syllable_count(word)
+    end
+  end
+
+  def make_english_word(word)
+    return word unless word =~ /\d+/
+
+    word = word.gsub(/,/, '')
+
+    word = word.gsub(/(\d+)/) { decimal_to_word($1) }
+
+    word
+  end
+
+  def get_phrase(phase, num_syllables)
+    case phase
+    when "start"
+      loop do
+        phrase = start_phrases.sample
+        return phrase if get_phrase_syllables(phrase) == num_syllables
+      end
+    when "mid"
+      loop do
+        phrase = mid_phrases.sample
+        return phrase if get_phrase_syllables(phrase) == num_syllables
+      end
+    when "end"
+      loop do
+        phrase = end_phrases.sample
+        return phrase if get_phrase_syllables(phrase) == num_syllables
+      end
+    end
+  end
+
+  def decimal_to_word(word)
+    # handles decimal numbers 0 to 999999
+    word = word.scan(/\d+/)[0]
+
+    decimal = word.to_s.chars.reverse
+    word_arr = []
+
+    decimal.each_with_index do |digit, index|
+      if index % 3 == 0
+        word_arr.push(ONES[digit.to_i])
+      elsif index % 3 == 1
+        word_arr.push(TENS[digit.to_i])
+      elsif index % 3 == 2
+        word_arr.push(ONES[digit.to_i] + ' hundred')
+      end
+    end
+    word_arr.reverse!
+
+    if decimal.count > 3
+      word_arr[1] == 'ten' ? insert_idx = 3 : insert_idx = 2
+      word_arr = word_arr.insert(insert_idx, 'thousand')
+    end
+
+    word_arr.delete_if { |word| word =~ /zero/ } unless word_arr.length == 1
+
+    word_str = word_arr.join(' ')
+
+    TEENS.each do |k, v|
+      word_str.gsub!(/#{k}/, v)
+    end
+
+    word_str
   end
 end
 
-p = Phrases.new("All day long we seemed to dawdle through a country which was full of
-beauty of every kind. Sometimes we saw little towns or castles on the
-top of steep hills such as we see in old missals; sometimes we ran by
-rivers and streams which seemed from the wide stony margin on each side
-of them to be subject to great floods. It takes a lot of water, and
-running strong, to sweep the outside edge of a river clear. At every
-station there were groups of people, sometimes crowds, and in all sorts
-of attire. Some of them were just like the peasants at home or those I
-saw coming through France and Germany, with short jackets and round hats
-and home-made trousers; but others were very picturesque. The women
-looked pretty, except when you got near them, but they were very clumsy
-about the waist. They had all full white sleeves of some kind or other,
-and most of them had big belts with a lot of strips of something
-fluttering from them like the dresses in a ballet, but of course there
-were petticoats under them. The strangest figures we saw were the
-Slovaks, who were more barbarian than the rest, with their big cow-boy
-hats, great baggy dirty-white trousers, white linen shirts, and enormous
-heavy leather belts, nearly a foot wide, all studded over with brass
-nails. They wore high boots, with their trousers tucked into them, and
-had long black hair and heavy black moustaches. They are very
-picturesque, but do not look prepossessing. On the stage they would be
-set down at once as some old Oriental band of brigands. They are,
-however, I am told, very harmless and rather wanting in natural
-self-assertion.")
-
+trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
+p = Phrases.new(trump_path)
 binding.pry

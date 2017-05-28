@@ -2,13 +2,13 @@ require 'sinatra'
 require "sinatra/reloader"
 require 'tilt/erubis'
 
-require_relative 'scanner.rb'
+require_relative 'haiku.rb'
 
 def get_haiku
   trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
-  scan = Scanner.new(trump_path)
+  haiku = Haiku.new(trump_path)
 
-  scan.get_sample_haiku
+  haiku.get_sample_haiku
 end
 
 def format_for_twitter(raw_haiku)

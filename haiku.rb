@@ -1,7 +1,7 @@
 require 'pry'
 require 'ruby_rhymes'
 
-class Scanner
+class Haiku
   attr_accessor :text, :all_words, :phrases
 
   ONES = %w(zero one two three four five six seven eight nine)
