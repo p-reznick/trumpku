@@ -1,4 +1,5 @@
 require 'sinatra'
+require "sinatra/reloader"
 require 'tilt/erubis'
 
 require_relative 'scanner.rb'
