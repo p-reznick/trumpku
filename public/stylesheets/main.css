@@ -3,6 +3,16 @@ body {
   background: #BF0A30;
 }
 
+div#popup_container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, .6);
+}
+
 footer {
   position: absolute;
   color: #002868;
@@ -64,9 +74,9 @@ header h1 {
 }
 
 main p#popup {
-  margin-left: 2rem;
-  margin-top: 2rem;
-  opacity: 0;
+  position: absolute;
+  top: 20%;
+  left: 30%;
   background: #ccc;
   color: #002868;
   margin-top: 1.5rem;
@@ -74,7 +84,6 @@ main p#popup {
   line-height: 1.2;
   font-weight: 600;
   width: 400px;
-  transition: visibility 0s, opacity 0.5s linear;
   box-sizing: border-box;
   padding: 10px;
 }
@@ -122,6 +131,15 @@ main div#refresh_button a {
 
 main div#refresh_button a:hover {
   color: #002868;
+}
+
+span#x_out {
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  float: right;
+  width: 5%;
+  margin-left: 95%;
 }
 
 /*Clearfix*/
