@@ -10,15 +10,21 @@ class Haiku
   end
 
   def get_sample_haiku
-    opt = rand(3)
+    opt = rand(5)
 
     case opt
     when 0
       raw_haiku = phrases.get_splittable_text([5, 7, 5], [5, 7, 5])
     when 1
-      raw_haiku = phrases.get_splittable_text([5, 7, 5], [8, 9])
+      a = rand(5) + 5
+      b = 17 - a
+      raw_haiku = phrases.get_splittable_text([5, 7, 5], [a, b])
     when 2
       raw_haiku = phrases.get_splittable_text([5, 7, 5], [17])
+    when 3
+      raw_haiku = phrases.get_splittable_text([5, 7, 5], [12, 5])
+    when 4
+      raw_haiku = phrases.get_splittable_text([5, 7, 5], [5, 12])
     end
 
     format_haiku(raw_haiku)
