@@ -2,7 +2,7 @@ require 'pry'
 require 'ruby_rhymes'
 
 class Phrases
-  attr_accessor :all, :start_phrases, :mid_phrases, :end_phrases, :text
+  attr_accessor :all_sentences, :start_phrases, :mid_phrases, :end_phrases, :text
 
   ONES = %w(zero one two three four five six seven eight nine)
   TENS = %w(zero ten twenty thirty forty fifty sixty seventy eighty ninety)
@@ -19,6 +19,7 @@ class Phrases
 
   def initialize(text)
     self.text = get_clean_text(text)
+    self.all_sentences = get_all_sentences
     self.start_phrases = get_start_phrases
     self.mid_phrases = get_mid_phrases
     self.end_phrases = get_end_phrases
@@ -32,6 +33,10 @@ class Phrases
     else
       text
     end.gsub(/(\n|["])/, '')
+  end
+
+  def get_all_sentences
+    sentences = text.scan(/[\A\.]\s+[^\.]+\./)
   end
 
   def get_start_phrases
@@ -96,6 +101,13 @@ class Phrases
     end
   end
 
+  def get_sentence(num_syllables)
+    loop do
+      sentence = all_sentences.sample
+      return sentence if get_phrase_syllables(sentence) == num_syllables
+    end
+  end
+
   def decimal_to_word(word)
     # handles decimal numbers 0 to 999999
     word = word.scan(/\d+/)[0]
@@ -140,26 +152,40 @@ class Phrases
     return word =~ /w/i ? count + 1 : count
   end
 
-    # def get_splittable_syll_phrase(total_sylls, sub_sylls)
-    #   counter = 0
-    #   loop do
-    #     phrase = get_syll_phrase(total_sylls)
-    #     return phrase if is_splittable?(phrase, sub_sylls)
-    #     break if counter > 1000
-    #   end
-    #
-    #   return 'no dice'
-    # end
-    #
-    # def is_splittable?(phrase, num_sylls)
-    #   sum = 0
-    #
-    #   phrase.split.each do |word|
-    #     sum += get_syllable_count(word)
-    #     return true if sum == num_sylls
-    #     return false if sum > num_sylls
-    #   end
-    #
-    #   false
-    # end
+  def get_splittable_text(syllable_pattern, sentence_lengths)
+    loop do
+      full_text = sentence_lengths.reduce('') do |aggregate, length|
+        aggregate.concat(get_sentence(length))
+      end
+
+      p full_text
+
+      return full_text if match_syllable_pattern?(full_text, syllable_pattern)
+    end
+  end
+
+  def match_syllable_pattern?(text, pattern)
+    total_lengths = []
+
+    pattern.each_with_index do |length, i|
+      total_lengths[i] = pattern[0..i].reduce(:+)
+    end
+
+    total_lengths = total_lengths.select do |length|
+      length != 0
+    end
+
+    match_count = 0
+
+    text.split.reduce('') do |aggregate, word|
+      aggregate.concat(' ' + word)
+      match_count += 1 if total_lengths.include?(get_syllable_count(aggregate))
+      aggregate
+    end
+
+    match_count == total_lengths.length
+  end
 end
+
+p = Phrases.new('./public/text_files/trump_speeches/trump-speeches-master/speeches.txt')
+p p.get_splittable_text([5, 7, 5], [10, 7])

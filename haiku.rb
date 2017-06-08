@@ -10,15 +10,20 @@ class Haiku
   end
 
   def get_sample_haiku
-    opt = 1
+    opt = rand(3)
+    opt = 2
 
     case opt
-    when 1
+    when 0
       raw_haiku = phrases.get_phrase('start', 5) + "\n" +
                   phrases.get_phrase('mid', 7) + "\n" +
                   phrases.get_phrase('end', 5)
+    when 1
+      raw_haiku = phrases.get_sentence(5) + "\n" +
+                  phrases.get_sentence(7) + "\n" +
+                  phrases.get_sentence(5)
     when 2
-      # raw_haiku = phrases.get_phrase('start', )
+      phrases.get_splittable_text([5, 7, 5], [17])
     end
 
     format_haiku(raw_haiku)
@@ -26,17 +31,6 @@ class Haiku
 
   def format_haiku(text)
     haiku = ''
-    # words = text.gsub(/"/, '').split
-    #
-    # words.each do |word|
-    #   next if word =~ /[\-—–]/
-    #   haiku.concat(word + ' ')
-    #   haiku.concat("\n") if get_phrase_syllables(haiku) == 5 ||
-    #                         get_phrase_syllables(haiku) == 12
-    # end
-    #
-    # haiku.rstrip!.concat('.')
-    p text
     text.split("\n").map do |line|
       line[0] = line[0].upcase
       line
