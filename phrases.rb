@@ -20,9 +20,6 @@ class Phrases
   def initialize(text)
     self.text = get_clean_text(text)
     self.all_sentences = get_all_sentences
-    self.start_phrases = get_start_phrases
-    self.mid_phrases = get_mid_phrases
-    self.end_phrases = get_end_phrases
   end
 
   def get_clean_text(text)
@@ -37,21 +34,10 @@ class Phrases
 
   def get_all_sentences
     sentences = text.scan(/[\A\.]\s+[^\.]+\./)
-  end
 
-  def get_start_phrases
-    phrases = text.scan(/\.\s+[^.,;—-]+/i)
-    phrases.map { |phrase| phrase.gsub(/\.\s+/, '').strip }
-  end
-
-  def get_mid_phrases
-    phrases = text.scan(/[,;—-]\s[^,.;]+[,;—-]/i)
-    phrases.map { |phrase| phrase.gsub(/[,;]/, '').strip }
-  end
-
-  def get_end_phrases
-    phrases = text.scan(/[^.,;—-]+\.\s/i)
-    phrases.map { |phrase| phrase.gsub(/\.\s{0,}/, '').strip }
+    # sentences.map do |sentence|
+    #   sentence.gsub(/\A\.\s+/, '')
+    # end
   end
 
   def get_syllable_count(word)
@@ -62,8 +48,7 @@ class Phrases
     begin
       count = make_english_word(word).to_phrase.syllables
     rescue
-      puts "Error thrown with word:"
-      p word
+      puts "Error thrown with word: #{word}"
     end
       count += 2 if word =~ /[%$]/
       count
@@ -71,6 +56,7 @@ class Phrases
 
   def get_phrase_syllables(string)
     string.split.inject(0) do |sum, word|
+      p string
       sum += get_syllable_count(word)
     end
   end
@@ -158,8 +144,6 @@ class Phrases
         aggregate.concat(get_sentence(length))
       end
 
-      p full_text
-
       return full_text if match_syllable_pattern?(full_text, syllable_pattern)
     end
   end
@@ -187,5 +171,6 @@ class Phrases
   end
 end
 
-p = Phrases.new('./public/text_files/trump_speeches/trump-speeches-master/speeches.txt')
-p p.get_splittable_text([5, 7, 5], [10, 7])
+trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
+p = Phrases.new(trump_path)
+p p.get_splittable_text([5, 7, 5], [5, 7, 5])
