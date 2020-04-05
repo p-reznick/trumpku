@@ -19,6 +19,7 @@ GEM
       rack
     ruby2_keywords (0.0.2)
     ruby_rhymes (0.1.2)
+    sequel (5.31.0)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -41,6 +42,7 @@ DEPENDENCIES
   pry
   puma
   ruby_rhymes
+  sequel
   sinatra
   sinatra-contrib
   tilt

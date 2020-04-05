@@ -8,6 +8,7 @@ gem 'tilt'
 gem 'erubis'
 gem 'pry'
 gem 'ruby_rhymes'
+gem 'sequel'
 
 group :production do
   gem 'puma'
