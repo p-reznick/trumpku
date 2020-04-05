@@ -172,5 +172,5 @@ class Phrases
 end
 
 trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
-p = Phrases.new(trump_path)
-p p.get_splittable_text([5, 7, 5], [5, 7, 5])
+# p = Phrases.new(trump_path)
+# p p.get_splittable_text([5, 7, 5], [5, 7, 5])
