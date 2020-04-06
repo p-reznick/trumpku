@@ -1,5 +1,3 @@
-require 'pry'
-require 'ruby_rhymes'
 
 class Phrases
   attr_accessor :all_sentences, :start_phrases, :mid_phrases, :end_phrases, :text
