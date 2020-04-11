@@ -115,5 +115,49 @@ RSpec.describe Phrases do
         expect(phrases.decimal_to_word(pair[0])).to(eq(pair[1]))
       end
     end
+
+    it '#is_acronym? returns whether word is acronym' do
+      words_and_acronym = [
+        ['cat', false],
+        ['CAT', true],
+        ['CIA', true],
+        ['cia', false],
+        ['CIa', false],
+      ]
+
+      words_and_acronym.each do |pair|
+        expect(phrases.is_acronym?(pair[0])).to(eq(pair[1]))
+      end
+    end
+
+    it '#get_acronym_syllable_count gets correct syllable count' do
+      words_and_count = [
+        ['CAT', 3],
+        ['CIA', 3],
+        ['DARPA', 5],
+        ['WNBA', 5],
+      ]
+
+      words_and_count.each do |pair|
+        expect(phrases.get_acronym_syllable_count(pair[0])).to(eq(pair[1]))
+      end
+    end
+
+    it '#match_syllable_pattern? matches syllable pattern' do
+      text_pattern_match = [
+        ['hi there', [2], true],
+        ['hi there', [3], false],
+        ['hi there friend', [3], true],
+        ['et in arcadia ego', [8], true],
+        ['et in arcadia ego', [4], false],
+        ['et in arcadia ego', [2, 6], true],
+        ['et in arcadia ego', [2, 4, 2], true],
+        ['et in arcadia ego', [2, 4, 1, 1], false],
+      ]
+
+      text_pattern_match.each do |triplet|
+        expect(phrases.match_syllable_pattern?(triplet[0], triplet[1])).to(eq(triplet[2]))
+      end
+    end
   end
 end
