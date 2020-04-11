@@ -34,10 +34,6 @@ class Phrases
 
   def get_all_sentences
     sentences = text.scan(/[\A\.]\s+[^\.]+\./)
-
-    # sentences.map do |sentence|
-    #   sentence.gsub(/\A\.\s+/, '')
-    # end
   end
 
   def get_syllable_count(word)
@@ -56,7 +52,6 @@ class Phrases
 
   def get_phrase_syllables(string)
     string.split.inject(0) do |sum, word|
-      p string
       sum += get_syllable_count(word)
     end
   end
@@ -112,8 +107,18 @@ class Phrases
     end
     word_arr.reverse!
 
-    if decimal.count > 3
-      word_arr[1] == 'ten' ? insert_idx = 3 : insert_idx = 2
+    if decimal.count === 6
+      count = 2
+      loop do
+        current = word_arr[count]
+        if current != 'zero'
+          word_arr.insert(count + 1, 'thousand')
+          break
+        end
+        count = count - 1
+      end
+    elsif decimal.count > 3
+      insert_idx = decimal.count % 3
       word_arr = word_arr.insert(insert_idx, 'thousand')
     end
 
@@ -171,6 +176,3 @@ class Phrases
   end
 end
 
-trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
-p = Phrases.new(trump_path)
-p p.get_splittable_text([5, 7, 5], [5, 7, 5])
