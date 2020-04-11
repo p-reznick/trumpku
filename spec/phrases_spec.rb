@@ -86,7 +86,7 @@ RSpec.describe Phrases do
         ['11', 'eleven'],
         ['car', 'car'],
         ['golf8ball', 'golfeightball'],
-        ['11,101', 'eleven thousand one hundred one'],
+        ['1,101', 'one thousand one hundred one'],
       ]
 
       raw_and_correct.each do |pair|
@@ -100,8 +100,13 @@ RSpec.describe Phrases do
         ['2', 'two'],
         ['18', 'eighteen'],
         ['127', 'one hundred twenty seven'],
+        ['901', 'nine hundred one'],
+        ['920', 'nine hundred twenty'],
         ['0', 'zero'],
         ['91', 'ninety one'],
+        ['800000', 'eight hundred thousand'],
+        ['20000', 'twenty thousand'],
+        ['7823', 'seven thousand eight hundred twenty three'],
         ['906928', 'nine hundred six thousand nine hundred twenty eight'],
         ['77', 'seventy seven'],
       ]

@@ -107,8 +107,18 @@ class Phrases
     end
     word_arr.reverse!
 
-    if decimal.count > 3
-      word_arr[1] == 'ten' ? insert_idx = 3 : insert_idx = 2
+    if decimal.count === 6
+      count = 2
+      loop do
+        current = word_arr[count]
+        if current != 'zero'
+          word_arr.insert(count + 1, 'thousand')
+          break
+        end
+        count = count - 1
+      end
+    elsif decimal.count > 3
+      insert_idx = decimal.count % 3
       word_arr = word_arr.insert(insert_idx, 'thousand')
     end
 
