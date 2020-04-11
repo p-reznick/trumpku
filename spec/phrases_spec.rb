@@ -79,7 +79,36 @@ RSpec.describe Phrases do
       phrases_and_counts.each do |pair|
         expect(phrases.get_phrase_syllables(pair[0])).to(eq(pair[1]))
       end
+    end
 
+    it '#make_english_word returns correct word' do
+      raw_and_correct = [
+        ['11', 'eleven'],
+        ['car', 'car'],
+        ['golf8ball', 'golfeightball'],
+        ['11,101', 'eleven thousand one hundred one'],
+      ]
+
+      raw_and_correct.each do |pair|
+        expect(phrases.make_english_word(pair[0])).to(eq(pair[1]))
+      end
+    end
+
+    it '#decimal_to_word returns correct words' do
+      decimals_and_words = [
+        ['1', 'one'],
+        ['2', 'two'],
+        ['18', 'eighteen'],
+        ['127', 'one hundred twenty seven'],
+        ['0', 'zero'],
+        ['91', 'ninety one'],
+        ['906928', 'nine hundred six thousand nine hundred twenty eight'],
+        ['77', 'seventy seven'],
+      ]
+
+      decimals_and_words.each do |pair|
+        expect(phrases.decimal_to_word(pair[0])).to(eq(pair[1]))
+      end
     end
   end
 end
