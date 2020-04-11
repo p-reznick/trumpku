@@ -34,10 +34,6 @@ class Phrases
 
   def get_all_sentences
     sentences = text.scan(/[\A\.]\s+[^\.]+\./)
-
-    # sentences.map do |sentence|
-    #   sentence.gsub(/\A\.\s+/, '')
-    # end
   end
 
   def get_syllable_count(word)
@@ -56,7 +52,6 @@ class Phrases
 
   def get_phrase_syllables(string)
     string.split.inject(0) do |sum, word|
-      p string
       sum += get_syllable_count(word)
     end
   end
