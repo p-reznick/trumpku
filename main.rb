@@ -4,6 +4,8 @@ require 'tilt/erubis'
 
 require_relative 'haiku.rb'
 
+VERSION='1.1.0'
+
 def get_haiku
   trump_path = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
   haiku = Haiku.new(trump_path)
@@ -30,4 +32,8 @@ end
 
 get '/new_haiku' do
   redirect '/'
+end
+
+get '/version' do
+  VERSION
 end
