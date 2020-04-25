@@ -9,7 +9,7 @@ class Haiku
     self.phrases = Phrases.new(text)
   end
 
-  def get_sample_haiku
+  def get_raw_haiku
     opt = rand(5)
 
     case opt
@@ -27,7 +27,11 @@ class Haiku
       raw_haiku = phrases.get_splittable_text([5, 7, 5], [5, 12])
     end
 
-    format_haiku(raw_haiku)
+    raw_haiku
+  end
+
+  def get_sample_haiku
+    format_haiku(get_raw_haiku)
   end
 
   def format_haiku(text)
