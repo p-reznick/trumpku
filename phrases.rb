@@ -1,7 +1,25 @@
 require 'pry'
 require 'ruby_rhymes'
+require 'active_record'
 
-class Phrases
+ActiveRecord::Base.establish_connection(
+  :adapter => "sqlite3",
+  :host => "localhost",
+  :database => "phrases",
+)
+
+ActiveRecord::Schema.define do
+    create_table :sentences, if_not_exists: true do |table|
+        table.column :text, :string
+        table.column :syllable_count, :number
+    end
+end
+
+class Sentence < ActiveRecord::Base
+  validates :text, uniqueness: true
+end
+
+class PhraseManager
   attr_accessor :all_sentences, :start_phrases, :mid_phrases, :end_phrases, :text
 
   ONES = %w(zero one two three four five six seven eight nine)
@@ -18,8 +36,20 @@ class Phrases
   MULTISYLLABLES = %w(ia io[^n] ua oi ed\z nuclear eo [^aeiou]le\z)
 
   def initialize(text)
+    puts "INITIALIZING!"
     self.text = get_clean_text(text)
     self.all_sentences = get_all_sentences
+    self.all_sentences.each do |text|
+      syllable_count = self.get_phrase_syllables(text)
+
+      sentence = Sentence.new
+      sentence.text = text
+      sentence.syllable_count = syllable_count
+      sentence.save
+    end
+    sentences = Sentence.all
+    puts "SENTENCES LENGTH"
+    puts sentences.length
   end
 
   def get_clean_text(text)

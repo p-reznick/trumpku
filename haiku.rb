@@ -6,7 +6,7 @@ class Haiku
   attr_accessor :phrases
 
   def initialize(text)
-    self.phrases = Phrases.new(text)
+    self.phrases = PhraseManager.new(text)
   end
 
   def get_raw_haiku

@@ -8,6 +8,8 @@ gem 'tilt'
 gem 'erubis'
 gem 'pry'
 gem 'ruby_rhymes'
+gem 'activerecord'
+gem 'sqlite3'
 
 group :production do
   gem 'puma'
