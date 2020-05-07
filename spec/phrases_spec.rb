@@ -2,10 +2,10 @@ require_relative '../phrases'
 
 TRUMP_PATH = './public/text_files/trump_speeches/trump-speeches-master/speeches.txt'
 
-RSpec.describe Phrases do
-  phrases = Phrases.new(TRUMP_PATH)
+RSpec.describe PhraseManager do
+  phrases = PhraseManager.new(TRUMP_PATH)
 
-  describe 'Phrases' do
+  describe 'PhraseManager' do
     it 'evaluate true to be true' do
       expect(true).to(eq(true))
     end
