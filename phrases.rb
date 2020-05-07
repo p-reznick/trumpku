@@ -37,6 +37,13 @@ class PhraseManager
 
   def initialize(text)
     puts "INITIALIZING!"
+    if (Sentence.all.length == 0)
+      populate_db(text)
+    end
+  end
+
+  def populate_db(text)
+    puts "POPULATING DB"
     self.text = get_clean_text(text)
     self.all_sentences = get_all_sentences
     self.all_sentences.each do |text|
@@ -48,7 +55,7 @@ class PhraseManager
       sentence.save
     end
     sentences = Sentence.all
-    puts "SENTENCES LENGTH"
+    puts "SENTENCES WRITTEN INTO DB:"
     puts sentences.length
   end
 
@@ -74,7 +81,7 @@ class PhraseManager
     begin
       count = make_english_word(word).to_phrase.syllables
     rescue
-      puts "Error thrown with word: #{word}"
+      # puts "Error thrown with word: #{word}"
     end
       count += 2 if word =~ /[%$]/
       count
@@ -92,31 +99,8 @@ class PhraseManager
     word = word.gsub(/(\d+)/) { decimal_to_word($1) }
   end
 
-  def get_phrase(phase, num_syllables)
-    case phase
-    when "start"
-      loop do
-        phrase = start_phrases.sample
-        return phrase if get_phrase_syllables(phrase) == num_syllables
-      end
-    when "mid"
-      loop do
-        phrase = mid_phrases.sample
-        return phrase if get_phrase_syllables(phrase) == num_syllables
-      end
-    when "end"
-      loop do
-        phrase = end_phrases.sample
-        return phrase if get_phrase_syllables(phrase) == num_syllables
-      end
-    end
-  end
-
   def get_sentence(num_syllables)
-    loop do
-      sentence = all_sentences.sample
-      return sentence if get_phrase_syllables(sentence) == num_syllables
-    end
+    Sentence.where(syllable_count: num_syllables).sample.text
   end
 
   def decimal_to_word(word)
